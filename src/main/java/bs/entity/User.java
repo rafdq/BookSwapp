@@ -34,7 +34,7 @@ public class User
 	@Column(name="swap_points")
 	private int swapPoints;
 
-	@OneToMany(mappedBy="user", fetch = FetchType.LAZY, cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@OneToMany(mappedBy="user", fetch = FetchType.LAZY, cascade= {CascadeType.ALL})
 	private List<Book> booksToSwap;
 
 	public User()
