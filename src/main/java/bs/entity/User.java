@@ -12,9 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
-@Table(name="account_manager")
+@Table(name="user")
 public class User
 {
 	@Id
@@ -34,7 +36,8 @@ public class User
 	@Column(name="swap_points")
 	private int swapPoints;
 
-	@OneToMany(mappedBy="user", fetch = FetchType.LAZY, cascade= {CascadeType.ALL})
+	@JsonManagedReference
+	@OneToMany(mappedBy="user", fetch = FetchType.LAZY, cascade= {CascadeType.ALL}, orphanRemoval = true)
 	private List<Book> booksToSwap;
 
 	public User()
