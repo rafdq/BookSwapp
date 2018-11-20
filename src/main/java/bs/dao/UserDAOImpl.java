@@ -2,6 +2,11 @@ package bs.dao;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -25,7 +30,18 @@ public class UserDAOImpl implements UserDAO
 	public List<User> listAllUsers()
 	{
 
-		Query<User> query = getSession().createQuery("from User", User.class);
+		Session session = getSession();
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
+		Root<User> userRoot = criteriaQuery.from(User.class);
+
+		userRoot.fetch("booksToSwap", JoinType.INNER);
+
+		criteriaQuery.select(userRoot).distinct(true);
+		criteriaQuery.orderBy(builder.desc(userRoot.get("id")));
+				
+		Query<User> query = session.createQuery(criteriaQuery);
+
 		List<User> users = query.getResultList();
 
 		return users;

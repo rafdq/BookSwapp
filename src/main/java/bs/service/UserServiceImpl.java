@@ -11,7 +11,7 @@ import bs.entity.User;
 
 @Service
 @Transactional
-public class UserRerviceImpl implements UserService
+public class UserServiceImpl implements UserService
 {
 	@Autowired
 	UserDAO userDAO;
