@@ -13,7 +13,7 @@ public class UserExceptionHandler
 	{
 		UserErrorReponse error = new UserErrorReponse(HttpStatus.NOT_FOUND.value(), exc.getMessage());
 
-		return new ResponseEntity<UserErrorReponse>(error, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 
 	}
 	
@@ -22,7 +22,7 @@ public class UserExceptionHandler
 	{
 		UserErrorReponse error = new UserErrorReponse(HttpStatus.BAD_REQUEST.value(), exc.getMessage());
 
-		return new ResponseEntity<UserErrorReponse>(error, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 
 	}
 }
