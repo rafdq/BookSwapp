@@ -16,4 +16,13 @@ public class UserExceptionHandler
 		return new ResponseEntity<UserErrorReponse>(error, HttpStatus.NOT_FOUND);
 
 	}
+	
+	@ExceptionHandler
+	public ResponseEntity<UserErrorReponse> handleException(Exception exc)
+	{
+		UserErrorReponse error = new UserErrorReponse(HttpStatus.BAD_REQUEST.value(), exc.getMessage());
+
+		return new ResponseEntity<UserErrorReponse>(error, HttpStatus.BAD_REQUEST);
+
+	}
 }
