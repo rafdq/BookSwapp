@@ -13,6 +13,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import bs.controller.UserNotFoundException;
 import bs.entity.User;
 
 @Repository
@@ -54,10 +55,10 @@ public class UserDAOImpl implements UserDAO
 
 	public User getUserById(int id)
 	{
-		Query<User> query = getSession().createQuery("select u from User u join fetch u.booksToSwap where u.id=:theId", User.class);
+		Query<User> query = getSession().createQuery("select u from User u left join fetch u.booksToSwap where u.id=:theId", User.class);
 		query.setParameter("theId", id);
 
-		return query.getSingleResult();
+		return (User)query.getResultList().stream().findFirst().orElse(null);
 	}
 
 	public void deleteUser(int id)
