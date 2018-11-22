@@ -13,23 +13,30 @@ import bs.service.UserService;
 
 @RestController
 @RequestMapping("/api")
-public class UserController 
+public class UserController
 {
 	@Autowired
 	UserService userService;
-	
+
 	@GetMapping("/users")
 	public List<User> getUsers()
 	{
 		return userService.listAllUsers();
-		
+
 	}
-	
+
 	@GetMapping("/users/{userId}")
 	public User getUser(@PathVariable int userId)
 	{
-		return userService.getUserById(userId);
-		
+		User user = userService.getUserById(userId);
+
+		if (user == null)
+		{
+			throw new UserNotFoundException("User id not found - " + userId);
+		}
+
+		return user;
+
 	}
-	
+
 }
