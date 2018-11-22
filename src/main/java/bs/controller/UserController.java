@@ -3,6 +3,7 @@ package bs.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,4 +62,21 @@ public class UserController
 		return user;
 
 	}
+	
+	@DeleteMapping("/users/{userId}")
+	public String deleteUser(@PathVariable int userId)
+	{
+		User user = userService.getUserById(userId);
+
+		if (user == null)
+		{
+			throw new UserNotFoundException("User id not found - " + userId);
+		}
+
+		userService.deleteUser(userId);
+		
+		return "User ("+ userId +") deleted!";
+
+	}
+	
 }
