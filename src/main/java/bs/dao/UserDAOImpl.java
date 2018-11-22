@@ -64,7 +64,11 @@ public class UserDAOImpl implements UserDAO
 	public void deleteUser(int id)
 	{
 		User user = getUserById(id);
-		getSession().delete(user);
+		if(user == null)
+		{
+			throw new UserNotFoundException("User id not found - " + id);
+		}
+		else getSession().delete(user);
 
 	}
 
