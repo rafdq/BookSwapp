@@ -10,11 +10,13 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import bs.controller.UserNotFoundException;
+import bs.controller.UserNotUniqueNameOrEmailException;
 import bs.entity.User;
 
 @Repository
@@ -51,7 +53,14 @@ public class UserDAOImpl implements UserDAO
 
 	public void saveOrUpdateUser(User user)
 	{
-		getSession().saveOrUpdate(user);
+		try
+		{
+			getSession().saveOrUpdate(user);
+			
+		} catch (ConstraintViolationException e)
+		{
+			throw new UserNotUniqueNameOrEmailException("User with given name or email already exists!");
+		}
 	}
 
 	public User getUserById(int id)
