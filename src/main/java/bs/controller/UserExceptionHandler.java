@@ -25,4 +25,14 @@ public class UserExceptionHandler
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 
 	}
+	
+	@ExceptionHandler
+	public ResponseEntity<UserErrorReponse> handleException(UserNotUniqueNameOrEmailException exc)
+	{
+		UserErrorReponse error = new UserErrorReponse(HttpStatus.BAD_REQUEST.value(), exc.getMessage());
+		
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+		
+	}
+	
 }
