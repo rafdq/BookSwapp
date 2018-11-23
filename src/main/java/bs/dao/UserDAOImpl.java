@@ -2,6 +2,7 @@ package bs.dao;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -55,20 +56,26 @@ public class UserDAOImpl implements UserDAO
 
 	public User getUserById(int id)
 	{
-		Query<User> query = getSession().createQuery("select u from User u left join fetch u.booksToSwap where u.id=:theId", User.class);
-		query.setParameter("theId", id);
+		User user;
 
-		return (User)query.getResultList().stream().findFirst().orElse(null);
+		try
+		{
+			Query<User> query = getSession().createQuery("select u from User u left join fetch u.booksToSwap where u.id=:theId", User.class);
+			query.setParameter("theId", id);
+			user = query.getSingleResult();
+			
+		} catch (NoResultException e)
+		{
+			throw new UserNotFoundException("User id not found - " + id);
+		}
+
+		return user;
 	}
 
 	public void deleteUser(int id)
 	{
 		User user = getUserById(id);
-		if(user == null)
-		{
-			throw new UserNotFoundException("User id not found - " + id);
-		}
-		else getSession().delete(user);
+		getSession().delete(user);
 
 	}
 

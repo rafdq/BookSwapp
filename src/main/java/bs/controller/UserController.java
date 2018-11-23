@@ -34,11 +34,6 @@ public class UserController
 	{
 		User user = userService.getUserById(userId);
 
-		if (user == null)
-		{
-			throw new UserNotFoundException("User id not found - " + userId);
-		}
-
 		return user;
 
 	}
