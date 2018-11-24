@@ -36,6 +36,12 @@ public class Book
 	@Column(name = "condition")
 	private int condition;
 
+	@Column(name = "shipping")
+	private int shipping;
+
+	@Column(name="description")
+	private String description;
+	
 	@Column(name = "active")
 	private boolean active;
 
@@ -48,13 +54,14 @@ public class Book
 	{
 	}
 
-	public Book(String title, String author, byte[] cover, int condition, boolean active, User user)
+	public Book(String title, String author, byte[] cover, int condition, int shipping, String description, User user)
 	{
 		this.title = title;
 		this.author = author;
 		this.cover = cover;
 		this.condition = condition;
-		this.active = active;
+		this.shipping = shipping;
+		this.description = description;
 		this.user = user;
 	}
 
@@ -81,6 +88,16 @@ public class Book
 	public int getCondition()
 	{
 		return condition;
+	}
+
+	public int getShipping()
+	{
+		return shipping;
+	}
+
+	public String getDescription()
+	{
+		return description;
 	}
 
 	public boolean isActive()
@@ -118,6 +135,16 @@ public class Book
 		this.condition = condition;
 	}
 
+	public void setShipping(int shipping)
+	{
+		this.shipping = shipping;
+	}
+
+	public void setDescription(String description)
+	{
+		this.description = description;
+	}
+
 	public void setActive(boolean active)
 	{
 		this.active = active;
@@ -128,26 +155,6 @@ public class Book
 		this.user = user;
 	}
 
-	@Override
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder();
-		builder.append("Book [id=");
-		builder.append(id);
-		builder.append(", title=");
-		builder.append(title);
-		builder.append(", author=");
-		builder.append(author);
-		builder.append(", cover=");
-		builder.append(Arrays.toString(cover));
-		builder.append(", condition=");
-		builder.append(condition);
-		builder.append(", active=");
-		builder.append(active);
-		builder.append(", user=");
-		builder.append(user);
-		builder.append("]");
-		return builder.toString();
-	}
+	
 
 }
