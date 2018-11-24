@@ -33,6 +33,9 @@ public class User
 	@Column(name="phone_number")
 	private String phoneNumber;
 	
+	@Column(name="information")
+	private String information;
+	
 	@Column(name="swap_points")
 	private int swapPoints;
 
@@ -44,11 +47,12 @@ public class User
 	{
 	}
 
-	public User(String name, String email, String phoneNumber)
+	public User(String name, String email, String phoneNumber, String information)
 	{
 		this.name = name;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+		this.information = information;
 	}
 
 	public int getId()
@@ -69,6 +73,11 @@ public class User
 	public String getPhoneNumber()
 	{
 		return phoneNumber;
+	}
+
+	public String getInformation()
+	{
+		return information;
 	}
 
 	public int getSwapPoints()
@@ -101,6 +110,11 @@ public class User
 		this.phoneNumber = phoneNumber;
 	}
 
+	public void setInformation(String information)
+	{
+		this.information = information;
+	}
+
 	public void setSwapPoints(int swapPoints)
 	{
 		this.swapPoints = swapPoints;
@@ -111,24 +125,6 @@ public class User
 		this.booksToSwap = booksToSwap;
 	}
 
-	@Override
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder();
-		builder.append("User [id=");
-		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", phoneNumber=");
-		builder.append(phoneNumber);
-		builder.append(", swapPoints=");
-		builder.append(swapPoints);
-		builder.append("]");
-		return builder.toString();
-	}
-	
-	
+		
 
 }
