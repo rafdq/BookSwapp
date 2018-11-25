@@ -13,11 +13,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import bs.controller.UserNotFoundException;
 import bs.controller.UserNotUniqueNameOrEmailException;
 import bs.entity.User;
+
 
 @Repository
 public class UserDAOImpl implements UserDAO
@@ -31,26 +35,33 @@ public class UserDAOImpl implements UserDAO
 
 	}
 
-	public List<User> listAllUsers()
+	public Page<User> listAllUsers(Pageable pageable)
 	{
 
 		Session session = getSession();
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
-		Root<User> userRoot = criteriaQuery.from(User.class);
+		Root<User> root = criteriaQuery.from(User.class);
 
-		userRoot.fetch("booksToSwap", JoinType.INNER);
+		root.fetch("booksToSwap", JoinType.INNER);
 
-		criteriaQuery.select(userRoot).distinct(true);
-		criteriaQuery.orderBy(builder.desc(userRoot.get("id")));
+		criteriaQuery.select(root).distinct(true);
+		criteriaQuery.orderBy(builder.desc(root.get("id")));
 				
 		Query<User> query = session.createQuery(criteriaQuery);
 
+		query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+		query.setMaxResults(pageable.getPageSize());
+		
 		List<User> users = query.getResultList();
+		
+		Page<User> page = new PageImpl<>(users, pageable, getUsersCount());
+		
+		return page;
 
-		return users;
 	}
 
+	
 	public void saveOrUpdateUser(User user)
 	{
 		try
@@ -86,6 +97,14 @@ public class UserDAOImpl implements UserDAO
 		User user = getUserById(id);
 		getSession().delete(user);
 
+	}
+
+	@Override
+	public long getUsersCount()
+	{
+		Query<Long> query = getSession().createQuery("select count(1) from User", Long.class);
+		
+		return query.getSingleResult().longValue();
 	}
 
 }
