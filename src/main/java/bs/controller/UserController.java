@@ -1,8 +1,9 @@
 package bs.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import bs.entity.User;
@@ -21,14 +23,19 @@ public class UserController
 {
 	@Autowired
 	UserService userService;
-
-	@GetMapping("/users")
-	public List<User> getUsers()
+	
+		
+	@GetMapping("/users") 
+	public Page<User> getUsersPaginated(@RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber, 
+			@RequestParam(value = "pageSize",required = false, defaultValue = "5") int pageSize) 
 	{
-		return userService.listAllUsers();
-
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<User> page = userService.listAllUsers(pageable);
+		return page;
 	}
-
+	
+	
+	
 	@GetMapping("/users/{userId}")
 	public User getUser(@PathVariable int userId)
 	{
