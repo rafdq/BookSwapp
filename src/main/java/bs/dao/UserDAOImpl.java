@@ -99,4 +99,12 @@ public class UserDAOImpl implements UserDAO
 
 	}
 
+	@Override
+	public long getUsersCount()
+	{
+		Query<Long> query = getSession().createQuery("select count(1) from User", Long.class);
+		
+		return query.getSingleResult().longValue();
+	}
+
 }
