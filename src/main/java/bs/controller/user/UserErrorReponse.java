@@ -1,4 +1,4 @@
-package bs.controller;
+package bs.controller.user;
 
 public class UserErrorReponse
 {
