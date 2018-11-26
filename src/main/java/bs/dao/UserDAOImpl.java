@@ -18,8 +18,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import bs.controller.UserNotFoundException;
-import bs.controller.UserNotUniqueNameOrEmailException;
+import bs.controller.user.UserNotFoundException;
+import bs.controller.user.UserNotUniqueNameOrEmailException;
 import bs.entity.User;
 
 
