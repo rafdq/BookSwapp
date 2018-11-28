@@ -3,6 +3,8 @@ package bs.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,14 +33,20 @@ public class BookServiceImpl implements BookService
 		bookDAO.saveOrUpdateBook(book);
 	}
 
-	public Book getBookById(int id)
+	public Book getBookById(long id)
 	{
 		return bookDAO.getBookById(id);
 	}
 
-	public void deleteBook(int id)
+	public void deleteBook(long id)
 	{
 		bookDAO.deleteBook(id);
+	}
+
+	@Override
+	public Page<Book> listAllActiveBooks(Pageable pageable)
+	{
+		return bookDAO.listAllActiveBooks(pageable);
 	}
 
 }

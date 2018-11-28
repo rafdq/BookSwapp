@@ -1,4 +1,4 @@
-package bs.controller;
+package bs.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

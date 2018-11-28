@@ -1,7 +1,5 @@
 package bs.entity;
 
-import java.util.Arrays;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
