@@ -78,16 +78,16 @@ public class BookDAOImpl implements BookDAO
 		getSession().saveOrUpdate(book);
 	}
 
-	public Book getBookById(int id)
+	public Book getBookById(long id)
 	{
-		Query<Book> query = getSession().createQuery("select b from Book where b.id=:theId", Book.class);
+		Query<Book> query = getSession().createQuery("select b from Book b where b.id=:theId", Book.class);
 		query.setParameter("theId", id);
 
 		return query.getSingleResult();
 
 	}
 
-	public void deleteBook(int id)
+	public void deleteBook(long id)
 	{
 		getSession().delete(getBookById(id));
 	}

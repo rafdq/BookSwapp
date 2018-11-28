@@ -18,8 +18,8 @@ public interface BookDAO
 
 	public void saveOrUpdateBook(Book book);
 
-	public Book getBookById(int id);
+	public Book getBookById(long id);
 
-	public void deleteBook(int id);
+	public void deleteBook(long id);
 
 }
